@@ -8,11 +8,7 @@ import io.airbyte.cdk.load.util.setOnce
 import io.github.oshai.kotlinlogging.KotlinLogging
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
-import org.junit.jupiter.api.Assertions.fail
-import org.projectnessie.minio.MinioContainer
 import org.testcontainers.containers.ComposeContainer
-import org.testcontainers.containers.startupcheck.StartupCheckStrategy
-import org.testcontainers.containers.wait.strategy.DockerHealthcheckWaitStrategy
 
 private val logger = KotlinLogging.logger {}
 
@@ -35,15 +31,15 @@ object NessieTestContainers {
     fun start() {
         if (startRunOnce.setOnce()) {
             testcontainers.start()
-//            val minio = MinioContainer()
-//                .withEnv("MINIO_ROOT_USER", "inioadmin")
-//                .withEnv("MINIO_ROOT_PASSWORD", "inioadmin")
-//                .withEnv("MINIO_ADDRESS", ":9000")
-//                .withEnv("MINIO_CONSOLE_ADDRESS", ":9090")
-//                .withExposedPorts(9000)
-//            minio.start()
-//            val minioPort = minio.getMappedPort(9000)
-//            fail("Started minio. Port is $minioPort")
+            //            val minio = MinioContainer()
+            //                .withEnv("MINIO_ROOT_USER", "inioadmin")
+            //                .withEnv("MINIO_ROOT_PASSWORD", "inioadmin")
+            //                .withEnv("MINIO_ADDRESS", ":9000")
+            //                .withEnv("MINIO_CONSOLE_ADDRESS", ":9090")
+            //                .withExposedPorts(9000)
+            //            minio.start()
+            //            val minioPort = minio.getMappedPort(9000)
+            //            fail("Started minio. Port is $minioPort")
         } else {
             // afaict there's no method to wait for the containers to start
             // so just poll until these methods stop throwing exceptions
