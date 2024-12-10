@@ -25,6 +25,7 @@ object NessieTestContainers {
             .withExposedService("nessie", 19120)
             .withExposedService("minio", 9000)
             .withExposedService("keycloak", 8080)
+            .withLocalCompose(true)
     private val startRunOnce = AtomicBoolean(false)
 
     /**
@@ -33,27 +34,27 @@ object NessieTestContainers {
      */
     fun start() {
         if (startRunOnce.setOnce()) {
-//            testcontainers.start()
-            val minio = MinioContainer()
-                .withEnv("MINIO_ROOT_USER", "inioadmin")
-                .withEnv("MINIO_ROOT_PASSWORD", "inioadmin")
-                .withEnv("MINIO_ADDRESS", ":9000")
-                .withEnv("MINIO_CONSOLE_ADDRESS", ":9090")
-                .withExposedPorts(9000)
-            minio.start()
-            val minioPort = minio.getMappedPort(9000)
-            fail("Started minio. Port is $minioPort")
+            testcontainers.start()
+//            val minio = MinioContainer()
+//                .withEnv("MINIO_ROOT_USER", "inioadmin")
+//                .withEnv("MINIO_ROOT_PASSWORD", "inioadmin")
+//                .withEnv("MINIO_ADDRESS", ":9000")
+//                .withEnv("MINIO_CONSOLE_ADDRESS", ":9090")
+//                .withExposedPorts(9000)
+//            minio.start()
+//            val minioPort = minio.getMappedPort(9000)
+//            fail("Started minio. Port is $minioPort")
         } else {
             // afaict there's no method to wait for the containers to start
             // so just poll until these methods stop throwing exceptions
             while (true) {
-//                try {
-//                    testcontainers.getServicePort("nessie", 19120)
-//                    testcontainers.getServicePort("minio", 9000)
-//                    testcontainers.getServicePort("keycloak", 8080)
-//                } catch (e: IllegalStateException) {
-//                    // do nothing
-//                }
+                try {
+                    testcontainers.getServicePort("nessie", 19120)
+                    testcontainers.getServicePort("minio", 9000)
+                    testcontainers.getServicePort("keycloak", 8080)
+                } catch (e: IllegalStateException) {
+                    // do nothing
+                }
                 break
             }
         }
