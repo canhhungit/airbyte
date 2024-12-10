@@ -8,6 +8,7 @@ import io.airbyte.cdk.load.util.setOnce
 import io.github.oshai.kotlinlogging.KotlinLogging
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
+import org.junit.jupiter.api.Assertions.fail
 import org.projectnessie.minio.MinioContainer
 import org.testcontainers.containers.ComposeContainer
 import org.testcontainers.containers.startupcheck.StartupCheckStrategy
@@ -41,7 +42,7 @@ object NessieTestContainers {
                 .withExposedPorts(9000)
             minio.start()
             val minioPort = minio.getMappedPort(9000)
-            logger.info { "Started minio. Port is $minioPort" }
+            fail("Started minio. Port is $minioPort")
         } else {
             // afaict there's no method to wait for the containers to start
             // so just poll until these methods stop throwing exceptions
