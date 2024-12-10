@@ -7,14 +7,14 @@ package io.airbyte.integrations.destination.iceberg.v2
 import io.airbyte.cdk.load.util.setOnce
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
-import org.testcontainers.containers.DockerComposeContainer
+import org.testcontainers.containers.ComposeContainer
 
 /**
  * Shared test containers for all nessie tests, so that we don't launch redundant docker containers
  */
 object NessieTestContainers {
-    val testcontainers: DockerComposeContainer<*> =
-        DockerComposeContainer(File("src/test-integration/resources/nessie/docker-compose.yml"))
+    val testcontainers: ComposeContainer =
+        ComposeContainer(File("src/test-integration/resources/nessie/docker-compose.yml"))
             .withExposedService("nessie", 19120)
             .withExposedService("minio", 9000)
             .withExposedService("keycloak", 8080)
