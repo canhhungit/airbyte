@@ -43,8 +43,8 @@ import kotlinx.coroutines.flow.fold
 interface SpillToDiskTask : StreamLevel, InternalScope
 
 /**
- * Reads records from the message queue and writes them to disk. This task is internal and is not
- * exposed to the implementor.
+ * Reads records from the message queue and writes them to disk. Completes once the upstream
+ * inputQueue is closed.
  *
  * TODO: Allow for the record batch size to be supplied per-stream. (Needed?)
  */
