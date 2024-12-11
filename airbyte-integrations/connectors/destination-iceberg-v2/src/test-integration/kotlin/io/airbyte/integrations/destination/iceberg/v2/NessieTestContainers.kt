@@ -8,7 +8,7 @@ import io.airbyte.cdk.load.util.setOnce
 import io.github.oshai.kotlinlogging.KotlinLogging
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
-import org.testcontainers.containers.ComposeContainer
+import org.testcontainers.containers.DockerComposeContainer
 
 private val logger = KotlinLogging.logger {}
 
@@ -16,8 +16,8 @@ private val logger = KotlinLogging.logger {}
  * Shared test containers for all nessie tests, so that we don't launch redundant docker containers
  */
 object NessieTestContainers {
-    val testcontainers: ComposeContainer =
-        ComposeContainer(File("src/test-integration/resources/nessie/docker-compose.yml"))
+    val testcontainers =
+        DockerComposeContainer(File("src/test-integration/resources/nessie/docker-compose.yml"))
             .withExposedService("nessie", 19120)
             .withExposedService("minio", 9000)
             .withExposedService("keycloak", 8080)
